@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#385b4b">
+  <meta name="description" content="给零碎思考一个落点，把灵感慢慢整理成可以交给 AI 的计划。">
+  <title>灵感屿 · 让想法慢慢成形</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到工作区</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="主题导航">
+      <a class="brand" href="#" id="brand-link"><span class="brand-symbol" data-icon="sprout"></span><span><strong>灵感屿</strong><small>SPARKSPACE</small></span></a>
+      <button class="nav-item overview-nav" id="overview-button"><span data-icon="grid"></span><span>所有灵感</span><span class="nav-count" id="all-count">0</span></button>
+      <div class="section-label"><span>我的主题</span><button class="icon-button" id="new-topic-small" title="新建主题" aria-label="新建主题"><span data-icon="plus"></span></button></div>
+      <nav id="topic-list" class="topic-list" aria-label="主题列表"></nav>
+      <button class="new-topic-button" id="new-topic-button"><span data-icon="plus"></span>新建一个主题</button>
+      <div class="sidebar-bottom">
+        <div class="starter-card"><span class="tiny-label">A LITTLE SPARK</span><span class="starter-drawing" data-icon="constellation"></span><h3>不必想完整，<br>先让灵感留下来。</h3><button id="template-button" class="text-button">从一个模板开始 <span data-icon="arrow-right"></span></button></div>
+        <button class="nav-item" id="trash-button"><span data-icon="trash"></span><span>回收站</span><span class="nav-count" id="trash-count">0</span></button>
+        <button class="nav-item" id="settings-button"><span data-icon="settings"></span><span>数据与设备</span><span class="local-dot"></span></button>
+        <div class="sidebar-signature">你的思考，始终属于你。<span>v1.1</span></div>
+      </div>
+    </aside>
+    <button id="sidebar-scrim" class="sidebar-scrim" aria-label="关闭导航" hidden></button>
+    <div class="workspace">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menu-button" aria-label="打开主题导航"><span data-icon="menu"></span></button>
+        <div class="breadcrumbs"><span>我的工作空间</span><span class="breadcrumb-divider">/</span><strong id="breadcrumb-topic">灵感</strong></div>
+        <div class="topbar-actions">
+          <label class="search-field"><span data-icon="search"></span><input id="search-input" type="search" autocomplete="off" placeholder="搜索所有灵感" aria-label="搜索所有灵感"><kbd>Ctrl K</kbd></label>
+          <button class="connection-button" id="quick-window-button" title="打开可置顶的悬浮速记窗"><span data-icon="feather"></span><span>悬浮速记</span></button>
+          <button class="connection-button" id="connection-button" title="连接手机"><span data-icon="devices"></span><span>连接手机</span></button>
+        </div>
+      </header>
+      <div id="connection-banner" class="connection-banner" role="status" hidden></div>
+      <main id="main-content" tabindex="-1">
+        <section class="page-heading">
+          <div class="heading-copy"><div class="eyebrow" id="page-eyebrow">让每个想法，都有回响</div><h1 id="page-title">灵感正在靠岸</h1><p id="page-description">从一条小小的想法开始。</p></div>
+          <div class="heading-actions"><button class="button secondary" id="edit-topic-button"><span data-icon="sliders"></span>主题设定</button><button class="button secondary" id="ai-button"><span data-icon="sparkles"></span>AI 帮我整理</button><button class="button primary" id="export-button">导出给 AI<span data-icon="arrow-up-right"></span></button></div>
+        </section>
+        <section class="topic-brief" id="topic-brief" aria-label="主题目标"></section>
+        <section class="focus-banner" id="focus-banner" aria-label="当前聚焦问题" hidden></section>
+        <section class="quick-capture" id="quick-capture" aria-label="记录灵感">
+          <div class="capture-main"><span class="capture-symbol" data-icon="plus"></span><textarea id="quick-input" rows="2" maxlength="100000" placeholder="想到什么，先记下来……" aria-label="写下一条灵感"></textarea></div>
+          <div class="capture-footer"><div class="capture-options"><select id="quick-kind" aria-label="灵感类型"><option value="idea">✧ 灵感想法</option><option value="question">? 待解问题</option><option value="decision">✓ 决定</option><option value="reference">↗ 参考资料</option></select><span class="capture-hint" id="capture-scope">作为这个主题下的新主问题</span></div><button class="button capture-submit" id="quick-save">记下来 <kbd>Ctrl ↵</kbd><span data-icon="arrow-right"></span></button></div>
+          <div id="draft-indicator" class="draft-indicator" aria-live="polite"></div>
+        </section>
+        <section class="ideas-section">
+          <div class="view-toolbar"><div class="view-tabs" role="tablist" aria-label="问题视图"><button role="tab" aria-selected="true" data-view="cards"><span data-icon="grid"></span>主问题分组</button><button role="tab" aria-selected="false" data-view="tree"><span data-icon="branch"></span>分支脉络</button><button role="tab" aria-selected="false" data-view="board"><span data-icon="columns"></span>整理看板</button></div><div class="view-controls"><span id="idea-count" class="muted"></span><select id="sort-select" aria-label="灵感排序"><option value="updated">最近修改</option><option value="created">记录顺序</option></select></div></div>
+          <div class="filter-toolbar"><div class="filter-chips" id="filter-chips"></div><div class="selection-controls"><button class="text-button" id="select-visible">选中当前结果</button><button class="text-button" id="clear-selection" hidden>取消选择</button></div></div>
+          <div id="ideas-container" class="ideas-grid" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state" hidden></div>
+          <div id="selection-bar" class="selection-bar" hidden></div>
+        </section>
+        <footer class="workspace-footer"><span><i class="status-dot" id="save-dot"></i><span id="save-status" role="status">正在连接你的工作空间…</span></span><span class="footer-tip">灵感不需要一步到位。</span></footer>
+      </main>
+    </div>
+  </div>
+  <dialog id="editor-dialog" class="dialog editor-dialog" aria-labelledby="editor-title"><div id="editor-content"></div></dialog>
+  <dialog id="topic-dialog" class="dialog topic-dialog" aria-labelledby="topic-dialog-title"><div id="topic-dialog-content"></div></dialog>
+  <dialog id="export-dialog" class="dialog export-dialog" aria-labelledby="export-title"><div id="export-content"></div></dialog>
+  <dialog id="settings-dialog" class="dialog settings-dialog" aria-labelledby="settings-title"><div id="settings-content"></div></dialog>
+  <dialog id="ai-dialog" class="dialog ai-dialog" aria-labelledby="ai-title"><div id="ai-content"></div></dialog>
+  <dialog id="delete-dialog" class="dialog confirm-dialog" aria-labelledby="delete-title"><form method="dialog"><div class="dialog-header"><h2 id="delete-title">删除所选记录</h2></div><p id="delete-description"></p><div class="delete-options"><label class="delete-option"><input type="radio" name="delete-mode" value="subtree" checked><span><strong>连同所有后代一起删除</strong><small id="delete-subtree-count"></small></span></label><label class="delete-option"><input type="radio" name="delete-mode" value="selected"><span><strong>仅删除所选，保留其他延伸</strong><small id="delete-selected-count"></small></span></label></div><p class="form-help">保留的延伸会提升到最近仍保留的上级，或成为独立主问题。保存时按最新分支核对，已分离的记录不会被连带删除。</p><div class="dialog-footer"><button class="button secondary" value="cancel">取消</button><button class="button primary" value="confirm" id="delete-confirm">移入回收站</button></div></form></dialog>
+  <dialog id="confirm-dialog" class="dialog confirm-dialog" aria-labelledby="confirm-title"><form method="dialog"><div class="dialog-header"><h2 id="confirm-title">确认操作</h2></div><p id="confirm-message"></p><div class="dialog-footer"><button class="button secondary" value="cancel">取消</button><button class="button primary" value="confirm" id="confirm-ok">确认</button></div></form></dialog>
+  <dialog id="pair-dialog" class="dialog pair-dialog" aria-labelledby="pair-title"><form id="pair-form"><span class="pair-logo" data-icon="sprout"></span><div class="eyebrow">让灵感在设备之间流动</div><h2 id="pair-title">连接你的灵感屿</h2><p>在电脑的「连接手机」中生成配对码，<br>输入后即可访问同一份灵感。</p><label class="form-label" for="pair-code">8 位配对码</label><input id="pair-code" class="pair-input" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" autocomplete="one-time-code" required placeholder="00000000"><p class="form-error" id="pair-error" role="alert"></p><button class="button primary" type="submit">连接工作空间 <span data-icon="arrow-right"></span></button><p class="pair-note">请让手机和电脑连接同一 Wi-Fi。</p></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

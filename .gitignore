@@ -1,0 +1,11 @@
+data/
+user-data/
+__pycache__/
+*.pyc
+qa-output/
+build/
+*.sqlite3*
+*.log
+.env
+.env.*
+!.env.example
